@@ -1,0 +1,82 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+    position: relative;
+    transition: color 0.3s ease-in-out;
+    background-color: #121212;
+    color: #ddd;
+}
+
+#star-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://www.transparenttextures.com/patterns/stardust.png');
+    z-index: -1;
+    opacity: 0.8;
+}
+
+#random-images-section {
+    /* display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px; */
+    max-width: 800px;
+    text-align: center;
+    padding: 40px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* background-color: rgba(132, 132, 132, 0.5);  Light mode */
+    position: relative;
+    z-index: 1;
+}
+
+#title {
+    font-size: 2.25rem; /* 36px */
+    margin-bottom: 10px;
+}
+
+.random-images-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+.nasa-image {
+    max-width: 100%;
+    height: auto;
+    /* width: 30rem;  480px */
+    /* width: 14rem; */
+    /* max-width: 33%; */
+    max-width: 85%;
+    margin: 0 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out;
+}
+.nasa-image:hover {
+    transform: scale(1.05);
+    /* cursor: pointer; */
+}
+
+
+
+/* Dark mode styles */
+body.dark-mode {
+    background-color: #ddd;
+    color: #121212;
+}
+
+body.dark-mode #overlay {
+    /* background: linear-gradient(to right, transparent, #8e44ad); */
+}

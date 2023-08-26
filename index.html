@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌌 NASA Images Viewer</title>
+    <link rel="stylesheet" href="./src/style.css">
+</head>
+<body>
+    <div id="star-bg"></div>
+
+    <section id="random-images-section">
+        <h1 id="title">🌌 NASA Images Viewer 🌌</h1>
+
+        <button id="mode-toggle">Dark/Light Mode</button>
+        <button id="new-image-button">Get New Images</button>
+
+        <div class="random-images-container">
+            <article>
+                <img id="nasa-image-1" class="nasa-image" alt="Space Image">
+                <p>Click to add to favorites</p>
+            </article>
+            <article>
+                <img id="nasa-image-2" class="nasa-image" alt="Space Image">
+                <p>Click to add to favorites</p>
+            </article>
+            <article>
+                <img id="nasa-image-3" class="nasa-image" alt="Space Image">
+                <p>Click to add to favorites</p>
+            </article>
+        </div>
+
+        <!-- <div id="image-info">
+            <p id="image-title"></p>
+            <p id="image-description"></p>
+            <p id="image-date"></p>
+        </div> -->
+    </section>
+
+    <section id="favorite-images-section">
+        <h2>Favorite Images</h2>
+        <button id="clear-favorites-button">Clear Favorites</button>
+        <div id="favorite-images-container">
+            <article>
+                <img id="nasa-image-1" class="nasa-image" alt="Space Image">
+                <p>Click to add to favorites</p>
+            </article>
+            <!-- <img id="favorite-image-1" class="favorite-image" alt="Space Image">
+            <img id="favorite-image-2" class="favorite-image" alt="Space Image">
+            <img id="favorite-image-3" class="favorite-image" alt="Space Image"> -->
+        </div>
+    </section>
+
+    <script src="./src/main.js"></script>
+</body>
+</html>
