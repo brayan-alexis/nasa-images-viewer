@@ -5,30 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🌌 NASA Images Viewer</title>
     <link rel="stylesheet" href="./src/style.css">
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 <body>
     <div id="star-bg"></div>
 
-    <section id="random-images-section">
-        <h1 id="title">🌌 NASA Images Viewer 🌌</h1>
+    <!-- <div id="loading-screen">
+        <h1>Loading...</h1> -->
 
-        <button id="mode-toggle">Dark/Light Mode</button>
-        <button id="new-image-button">Get New Images</button>
+    <p id="error"></p>
+
+    <section id="random-images-section">
+        <h1 class="title">🌌 NASA Images Viewer 🌌</h1>
+
+        <!-- <button id="mode-toggle">Dark/Light Mode</button> -->
+        <button id="refresh-button" class="button">Refresh</button>
 
         <div class="random-images-container">
             <article>
-                <img id="nasa-image-1" class="nasa-image" alt="Space Image">
-                <p>Click to add to favorites</p>
+                <img id="nasa-image-1" class="nasa-image" alt="Space Image" onclick="addToFavorites('nasa-image-1')">
+                <!-- <button class="button" onclick="addToFavorites('nasa-image-1')">Add to favorites</button> -->
             </article>
             <article>
-                <img id="nasa-image-2" class="nasa-image" alt="Space Image">
-                <p>Click to add to favorites</p>
+                <img id="nasa-image-2" class="nasa-image" alt="Space Image" onclick="addToFavorites('nasa-image-2')">
+                <!-- <p onclick="addToFavorites('nasa-image-2')">Click to add to favorites</p> -->
             </article>
             <article>
-                <img id="nasa-image-3" class="nasa-image" alt="Space Image">
-                <p>Click to add to favorites</p>
+                <img id="nasa-image-3" class="nasa-image" alt="Space Image" onclick="addToFavorites('nasa-image-3')">
+                <!-- <p onclick="addToFavorites('nasa-image-3')">Click to add to favorites</p> -->
             </article>
         </div>
+
+        <!-- <p>Click to add to favorites</p> -->
 
         <!-- <div id="image-info">
             <p id="image-title"></p>
@@ -38,18 +47,28 @@
     </section>
 
     <section id="favorite-images-section">
-        <h2>Favorite Images</h2>
-        <button id="clear-favorites-button">Clear Favorites</button>
+        <h2 class="subtitle">Favorite Images</h2>
+        <button id="clear-favorites-button" class="button">Clear Favorites</button>
+
         <div id="favorite-images-container">
-            <article>
+            <!-- <article>
                 <img id="nasa-image-1" class="nasa-image" alt="Space Image">
                 <p>Click to add to favorites</p>
-            </article>
+            </article> -->
             <!-- <img id="favorite-image-1" class="favorite-image" alt="Space Image">
             <img id="favorite-image-2" class="favorite-image" alt="Space Image">
             <img id="favorite-image-3" class="favorite-image" alt="Space Image"> -->
         </div>
+
+        <!-- <p>Click to remove from favorites</p> -->
     </section>
+
+    <!-- Dark Mode Button -->
+    <div class="dark-mode-container">
+        <button id="dark-mode-button" class="">
+            🌞
+        </button>
+    </div>
 
     <script src="./src/main.js"></script>
 </body>

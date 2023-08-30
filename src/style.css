@@ -1,16 +1,39 @@
-body {
+/* General styles */
+:root {
+    --background-color-dark: #121212;
+    --background-color-light: #DDDDDD;
+    --background-color-dark-section: rgba(0, 0, 0, 0.5);
+    /* background-color: rgba(0, 0, 0, 0.7); */
+    --background-color-light-section: rgba(132, 132, 132, 0.5);
+    --background-color-button: #1565c0; /* Azul intenso */
+    --background-color-button-hover: #1976d2; /* Azul brillante */
+    --background-color-button-active: #0d47a1; /* Azul oscuro */
+    --text-color-dark: #FFFFFF;
+    --text-color-light: #121212;
+    /* --text-color-dark-section: #FFFFFF;
+    --text-color-light-section: #121212; */
+    --box-shadow-section: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --box-shadow-image: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styles */
+body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     min-height: 100vh;
-    overflow: hidden;
+    /* overflow: hidden; */
     position: relative;
-    transition: color 0.3s ease-in-out;
-    background-color: #121212;
-    color: #ddd;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+    background-color: var(--background-color-dark);
+    color: var(--text-color-dark);
 }
 
 #star-bg {
@@ -24,41 +47,57 @@ body {
     opacity: 0.8;
 }
 
+.button {
+    background-color: var(--background-color-button);
+    color: var(--text-color-dark);
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    outline: none;
+}
+.button:hover {
+    background-color: var(--background-color-button-hover);
+}
+.button:active {
+    background-color: var(--background-color-button-active);
+}
+
 #random-images-section {
-    /* display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 20px; */
-    max-width: 800px;
+    max-width: 50rem; /* 800px */
     text-align: center;
-    padding: 40px;
+    padding: 2.5rem; /* 40px */
+    margin: 3.125rem 0 3.125rem 0; /* 50px */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
-    background-color: rgba(0, 0, 0, 0.5);
-    /* background-color: rgba(132, 132, 132, 0.5);  Light mode */
+    background-color: var(--background-color-dark-section);
     position: relative;
     z-index: 1;
-}
 
-#title {
+    /*margin-bottom: 20px;  Agregado para separar la sección de favoritos */
+}
+.title {
     font-size: 2.25rem; /* 36px */
-    margin-bottom: 10px;
+    margin-bottom: 1rem; /* 16px */
 }
-
 .random-images-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 20px 0;
+    margin: 1.25rem 0; /* 20px */
 }
 .nasa-image {
-    max-width: 100%;
     height: auto;
+    /* height: 14rem; */
+    /* max-height: 14rem; */
     /* width: 30rem;  480px */
-    /* width: 14rem; */
+    /* width: 14rem;*/
     /* max-width: 33%; */
-    max-width: 85%;
+    /* max-width: 14rem; */
+    max-width: 90%;
+    object-fit: cover;
     margin: 0 10px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -66,17 +105,75 @@ body {
 }
 .nasa-image:hover {
     transform: scale(1.05);
-    /* cursor: pointer; */
+    cursor: pointer;
 }
 
+#favorite-images-section {
+    /* display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px; */
 
+    max-width: 50rem; /* 800px */
+    text-align: center;
+    padding: 2.5rem; /* 40px */
+    margin: 0 3.125rem 3.125rem 3.125rem; /* 50px */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    background-color: var(--background-color-dark-section);
+    position: relative;
+    z-index: 1;
+}
+.subtitle {
+    font-size: 1.5rem; /* 24px */
+    margin-bottom: 1rem; /* 16px */
+}
+#favorite-images-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: 1.25rem 0; /* 20px */
+}
+.favorite-image {
+    max-width: 10rem; /* 100px */ /* Adjust the size as needed */ 
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 10px;
+}
 
 /* Dark mode styles */
 body.dark-mode {
-    background-color: #ddd;
+    background-color: var(--background-color-light);
     color: #121212;
 }
-
-body.dark-mode #overlay {
-    /* background: linear-gradient(to right, transparent, #8e44ad); */
+#random-images-section.dark-mode {
+    background-color: var(--background-color-light-section);
 }
+#favorite-images-section.dark-mode {
+    background-color: var(--background-color-light-section);
+}
+.dark-mode-container {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+}
+#dark-mode-button {
+    border-color: #FFFFFF;
+    color: var(--text-color-dark);
+    background-color: var(--background-color-button);
+    transition: background-color 0.3s ease;
+    outline: none;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+}
+#dark-mode-button:hover {
+    background-color: var(--background-color-button-hover);
+}
+#dark-mode-button:active {
+    background-color: var(--background-color-button-active);
+}
+

@@ -1,32 +1,41 @@
 // const NasaUrl = 'https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY'
 // const NasaUrl = 'https://images-api.nasa.gov/search?q=hubble&media_type=image&page_size=5' // 5 images
-const NasaUrl = 'https://images-api.nasa.gov/search?q=hubble&media_type=image' 
+const NASA_API_URL = 'https://images-api.nasa.gov/' 
 const nasaImage1 = document.getElementById("nasa-image-1");
 const nasaImage2 = document.getElementById("nasa-image-2");
 const nasaImage3 = document.getElementById("nasa-image-3");
 
+const error = document.getElementById("error");
+
 // Function to fetch a random NASA image
-const fetchNasaImage = async () => {
-    try{
-        const response = await fetch(NasaUrl);
+const fetchNasaImages = async () => {
+    try {
+        const response = await fetch(`${NASA_API_URL}search?q=hubble&media_type=image`);
         const data = await response.json();
-        console.log(data); // Check the console to see the data
-        
-        const images = data.collection.items;
-        // const randomImage = images[Math.floor(Math.random() * images.length)];
+        console.log(data); // Check the console to see the data object
+        return data.collection.items; // Return the array of images
+    } catch (err) {
+        console.log(err);
+        return []; // Return an empty array in case of error
+    }
+}
+
+// Function to display NASA images
+const displayRandomImages = async () => {
+    const images = await fetchNasaImages();
+
+    if (images.length > 0) {
         const randomImage1 = images[Math.floor(Math.random() * images.length)];
         const randomImage2 = images[Math.floor(Math.random() * images.length)];
         const randomImage3 = images[Math.floor(Math.random() * images.length)];
         console.log(randomImage1); // Check the console to see the data
-        
+
         // Get image URLs
-        // const imageUrl = randomImage.links[0].href;
         const imageUrl1 = randomImage1.links[0].href;
         const imageUrl2 = randomImage2.links[0].href;
         const imageUrl3 = randomImage3.links[0].href;
-        
+
         // Set image sources
-        // nasaImage1.src = imageUrl;
         nasaImage1.src = imageUrl1;
         nasaImage2.src = imageUrl2;
         nasaImage3.src = imageUrl3;
@@ -34,56 +43,159 @@ const fetchNasaImage = async () => {
         // Description
         // const description = randomImage1.data[0].description;
         // document.getElementById("image-description").innerHTML = description;
-
-    } catch (err) {
-        console.log(err);
+    } else {
+        console.log("No images available.");
+        // error.innerHTML = response.status;
     }
 }
-// Call the function to fetch a random NASA image
-// fetchNasaImage();
-window.onload = fetchNasaImage;
+// Call the function to display NASA images
+displayRandomImages();
+// window.onload = displayRandomImages;
 
-// Obtener una nueva imagen aleatoria cuando se hace clic en el botón
-const newImage = document.getElementById("new-image-button");
-newImage.addEventListener("click", fetchNasaImage);
+// Function to display favorite images
+const addToFavorites = (imageId) => {
+    const image = document.getElementById(imageId);
 
-// Dark mode functionality
-const modeToggle = document.getElementById("mode-toggle");
-const body = document.body;
-modeToggle.addEventListener("click", () => {
-    body.classList.toggle("dark-mode");
+    // Check if the page contains dark mode
+    // const body = document.body;
+    let darkMode = false;
+    if (body.classList.contains("dark-mode")) {
+        darkMode = true;
+    }
+
+    // Check if the image is already in favorites
+    // CHECK LATERRR!!!!
+    // const favoriteImages = document.querySelectorAll(".favorite-image");
+    // for (let i = 0; i < favoriteImages.length; i++) {
+    //     if (favoriteImages[i].getAttribute("id") === imageId) {
+    //         Swal.fire({
+    //             title: "Already in favorites!",
+    //             icon: "error",
+    //             // confirmButtonText: "OK",
+    //             // confirmButtonColor: "#3085d6",
+    //             // confirmButtonColor: "#1565c0",
+    //             showConfirmButton: false,
+    //             background: darkMode ? "#DDDDDD" : "#121212",
+    //             allowOutsideClick: true,
+    //             allowEscapeKey: true,
+    //             allowEnterKey: true,
+    //             stopKeydownPropagation: false,
+    //             showCloseButton: true,
+    //             closeButtonAriaLabel: "Close this dialog window",
+    //             timer: 1500,
+    //         });
+    //         return;
+    //     }
+    // }
+    
+
+    //Sweet Alert 2: Show image title and description in a modal and ask for confirmation to add to favorites
+    Swal.fire({
+        title: image.title,
+        text: image.description,
+        imageUrl: image.src,
+        imageAlt: image.title,
+        confirmButtonText: "Add to favorites",
+        showCancelButton: true,
+        cancelButtonText: "Cancel",
+        background: darkMode ? "#DDDDDD" : "#121212",
+        reverseButtons: true,
+        focusConfirm: false,
+        focusCancel: true,
+        // confirmButtonColor: "#3085d6",
+        confirmButtonColor: "#1565c0",
+        cancelButtonColor: "#d33",
+        allowOutsideClick: true,
+        allowEscapeKey: true,
+        allowEnterKey: false,
+        stopKeydownPropagation: false,
+        showCloseButton: true,
+        closeButtonAriaLabel: "Close this dialog window",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Swal.fire({
+            //     title: "Added to favorites!",
+            //     icon: "success",
+            //     confirmButtonText: "OK",
+            //     confirmButtonColor: "#3085d6",
+            //     allowOutsideClick: false,
+            //     allowEscapeKey: false,
+            //     allowEnterKey: false,
+            //     stopKeydownPropagation: false,
+            //     showCloseButton: true,
+            //     closeButtonAriaLabel: "Close this dialog window",
+            // });
+            // Add the image to favorites
+            const imageClone = image.cloneNode(true); // Cloning the image to avoid reference issues
+            imageClone.classList.add("favorite-image"); // Add a class for styling
+            imageClone.removeAttribute("onclick"); // Remove the onclick attribute
+            imageClone.addEventListener("click", () => removeFromFavorites(imageClone)); // Add a click event to remove from favorites
+            const favoriteImagesContainer = document.getElementById("favorite-images-container");
+            favoriteImagesContainer.appendChild(imageClone);
+        } 
+        // else if (result.dismiss === Swal.DismissReason.cancel) {
+        //     Swal.fire({
+        //         title: "Cancelled",
+        //         icon: "error",
+        //         confirmButtonText: "OK",
+        //         confirmButtonColor: "#3085d6",
+        //         allowOutsideClick: false,
+        //         allowEscapeKey: false,
+        //         allowEnterKey: false,
+        //         stopKeydownPropagation: false,
+        //         showCloseButton: true,
+        //         closeButtonAriaLabel: "Close this dialog window",
+        //     });
+        // }
+    });
+
+    // Add the image to favorites
+    // const imageClone = image.cloneNode(true); // Cloning the image to avoid reference issues
+    // imageClone.classList.add("favorite-image"); // Add a class for styling
+    // imageClone.removeAttribute("onclick"); // Remove the onclick attribute
+    // imageClone.addEventListener("click", () => removeFromFavorites(imageClone)); // Add a click event to remove from favorites
+    // const favoriteImagesContainer = document.getElementById("favorite-images-container");
+    // favoriteImagesContainer.appendChild(imageClone);
+};
+
+// Function to remove all favorite images
+const removeFromFavorites = (image) => {
+    const favoriteImagesContainer = document.getElementById("favorite-images-container");
+    favoriteImagesContainer.removeChild(image);
+};
+
+// Add to favorites by clicking the image
+// const addToFavoritesButtons = document.querySelectorAll(".add-to-favorites");
+// addToFavoritesButtons.forEach(button => {
+//     button.addEventListener("click", event => {
+//         const imageId = event.target.getAttribute("data-image");
+//         addToFavorites(imageId);
+//     });
+// });
+
+// Add to favorites by clicking the image
+const clearFavoritesButton = document.getElementById("clear-favorites-button");
+clearFavoritesButton.addEventListener("click", () => {
+    const favoriteImagesContainer = document.getElementById("favorite-images-container");
+    favoriteImagesContainer.innerHTML = ""; // Clear all favorite images
 });
 
 
 
-// Función para obtener un número aleatorio dentro de un rango
-function getRandomNumber(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
-  
-// URL para obtener la lista de activos multimedia
-const apiUrl = "https://images-api.nasa.gov/search?q=*&media_type=image";
+// Obtaining a random image by clicking the button
+const newImage = document.getElementById("refresh-button");
+// newImage.addEventListener("click", fetchNasaImage);
+newImage.addEventListener("click", displayRandomImages);
 
-// Realiza la solicitud GET para obtener la lista de activos
-fetch(apiUrl)
-.then(response => response.json())
-    .then(data => {
-        // Verifica si la respuesta contiene la colección y los elementos
-        if (data.collection && data.collection.items) {
-        const items = data.collection.items;
-
-        // Obtén un índice aleatorio dentro del rango de elementos disponibles
-        const randomIndex = getRandomNumber(0, items.length - 1);
-
-        // Obtén el NASA ID aleatorio del elemento seleccionado
-        const randomNasaId = items[randomIndex].data[0].nasa_id;
-
-        // Ahora puedes usar este NASA ID en tu solicitud para obtener el manifiesto
-        console.log("NASA ID aleatorio:", randomNasaId);
-        // Realiza la solicitud GET al manifiesto usando randomNasaId
-        // ...
-        }
-    })
-    .catch(error => {
-        console.error("Error al obtener la lista de activos:", error);
+// Dark mode functionality
+// const modeToggle = document.getElementById("mode-toggle");
+const darkModeButton = document.getElementById("dark-mode-button");
+const randomImageContainer = document.getElementById("random-images-section");
+const favoriteImagesContainer = document.getElementById("favorite-images-section");
+const body = document.body;
+darkModeButton.addEventListener("click", () => {
+    body.classList.toggle("dark-mode");
+    randomImageContainer.classList.toggle("dark-mode");
+    favoriteImagesContainer.classList.toggle("dark-mode");
+    darkModeButton.textContent = body.classList.contains("dark-mode") ? "🌛" : "🌞";
 });
