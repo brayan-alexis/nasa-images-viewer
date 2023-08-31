@@ -6,6 +6,32 @@ const nasaImage2 = document.querySelector(".nasa-image-2");
 const nasaImage3 = document.querySelector(".nasa-image-3");
 const nasaImages = [nasaImage1, nasaImage2, nasaImage3];
 
+// Dark mode functionality
+const body = document.body;
+const darkModeButton = document.getElementById("dark-mode-button");
+const randomImageContainer = document.getElementById("random-images-section");
+const favoriteImagesSection = document.getElementById("favorite-images-section");
+
+
+// Display favorite images from localStorage on page load
+document.addEventListener('DOMContentLoaded', () => {
+    const favoriteImagesContainer = document.getElementById("favorite-images-container");
+    const existingFavorites = JSON.parse(localStorage.getItem('favoriteImages')) || [];
+
+    existingFavorites.forEach(favImage => {
+        const imageClone = document.createElement('img');
+        imageClone.src = favImage.src;
+        imageClone.classList.add("favorite-image", "nasa-image");
+        imageClone.id = favImage.id;
+        imageClone.title = favImage.title;
+        imageClone.description = favImage.description;
+        imageClone.date = favImage.date;
+
+        imageClone.addEventListener("click", () => removeFromFavorites(imageClone));
+        favoriteImagesContainer.appendChild(imageClone);
+    });
+});
+
 // Function to fetch a random NASA image
 const fetchNasaImages = async () => {
     try {
@@ -62,10 +88,8 @@ const displayRandomImages = async () => {
 displayRandomImages();
 // window.onload = displayRandomImages;
 
-
 // Obtaining a random image by clicking the button
 const newImage = document.getElementById("refresh-button");
-// newImage.addEventListener("click", fetchNasaImage);
 newImage.addEventListener("click", displayRandomImages);
 
 // Add to favorites by clicking the image
@@ -136,13 +160,34 @@ const addToFavorites = async (imageId) => {
                 }
             }
 
-            // Add the image to favorites
+            // Add the image to favorites by cloning the image and adding it to the page
             const imageClone = image.cloneNode(true); // Cloning the image to avoid reference issues
             imageClone.classList.add("favorite-image"); // Add a class for styling
             imageClone.removeAttribute("onclick"); // Remove the onclick attribute
             imageClone.addEventListener("click", () => removeFromFavorites(imageClone)); // Add a click event to remove from favorites
             const favoriteImagesContainer = document.getElementById("favorite-images-container");
             favoriteImagesContainer.appendChild(imageClone);
+
+            // Add the image to localStorage
+            // Create an object with the image data
+            const favoriteImage = {
+                id: image.id,
+                src: image.src,
+                title: image.title,
+                description: image.description,
+                date: image.date,
+                className: 'nasa-image'
+            };
+
+            // Get existing favorite images from localStorage
+            const existingFavorites = JSON.parse(localStorage.getItem('favoriteImages')) || [];
+
+            // Check if the image is already in localStorage
+            const imageExists = existingFavorites.some(fav => fav.id === favoriteImage.id);
+            if (!imageExists) {
+                existingFavorites.push(favoriteImage);
+                localStorage.setItem('favoriteImages', JSON.stringify(existingFavorites));
+            }
 
             // Swal.fire({
             //     title: "Added to favorites!",
@@ -178,8 +223,15 @@ const addToFavorites = async (imageId) => {
 
 // Remove from favorites by clicking the image
 const removeFromFavorites = (image) => {
+    // Remove the image from the page
     const favoriteImagesContainer = document.getElementById("favorite-images-container");
     favoriteImagesContainer.removeChild(image);
+
+    // Remove the image from localStorage
+    const existingFavorites = JSON.parse(localStorage.getItem('favoriteImages')) || [];
+    const updatedFavorites = existingFavorites.filter(fav => fav.id !== image.id);
+
+    localStorage.setItem('favoriteImages', JSON.stringify(updatedFavorites));
 };
 
 // Clear all favorite images
@@ -187,21 +239,19 @@ const clearFavoritesButton = document.getElementById("clear-favorites-button");
 clearFavoritesButton.addEventListener("click", () => {
     const favoriteImagesContainer = document.getElementById("favorite-images-container");
 
-    // Remove all favorite images
+    // Remove all favorite images from the page
     while (favoriteImagesContainer.firstChild) {
         favoriteImagesContainer.removeChild(favoriteImagesContainer.firstChild);
     }
+
+    // Remove all favorite images from localStorage
+    localStorage.removeItem('favoriteImages');
 });
 
-
 // Dark mode functionality
-const darkModeButton = document.getElementById("dark-mode-button");
-const randomImageContainer = document.getElementById("random-images-section");
-const favoriteImagesContainer = document.getElementById("favorite-images-section");
-const body = document.body;
 darkModeButton.addEventListener("click", () => {
     body.classList.toggle("dark-mode");
     randomImageContainer.classList.toggle("dark-mode");
-    favoriteImagesContainer.classList.toggle("dark-mode");
+    favoriteImagesSection.classList.toggle("dark-mode");
     darkModeButton.textContent = body.classList.contains("dark-mode") ? "🌛" : "🌞";
 });
