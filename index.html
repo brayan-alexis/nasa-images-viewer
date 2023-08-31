@@ -6,7 +6,7 @@
     <title>🌌 NASA Images Viewer</title>
     <link rel="stylesheet" href="./src/style.css">
     <!-- SweetAlert2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <div id="star-bg"></div>
@@ -24,26 +24,26 @@
 
         <div class="random-images-container">
             <article>
-                <img id="nasa-image-1" class="nasa-image" alt="Space Image" onclick="addToFavorites('nasa-image-1')">
+                <img class="nasa-image nasa-image-1" alt="Space Image">
                 <!-- <button class="button" onclick="addToFavorites('nasa-image-1')">Add to favorites</button> -->
             </article>
             <article>
-                <img id="nasa-image-2" class="nasa-image" alt="Space Image" onclick="addToFavorites('nasa-image-2')">
+                <img class="nasa-image nasa-image-2" alt="Space Image">
                 <!-- <p onclick="addToFavorites('nasa-image-2')">Click to add to favorites</p> -->
             </article>
             <article>
-                <img id="nasa-image-3" class="nasa-image" alt="Space Image" onclick="addToFavorites('nasa-image-3')">
+                <img class="nasa-image nasa-image-3" alt="Space Image">
                 <!-- <p onclick="addToFavorites('nasa-image-3')">Click to add to favorites</p> -->
             </article>
         </div>
 
         <!-- <p>Click to add to favorites</p> -->
 
-        <!-- <div id="image-info">
+        <div id="image-info">
             <p id="image-title"></p>
             <p id="image-description"></p>
             <p id="image-date"></p>
-        </div> -->
+        </div>
     </section>
 
     <section id="favorite-images-section">
