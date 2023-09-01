@@ -177,3 +177,72 @@ body.dark-mode {
     background-color: var(--background-color-button-active);
 }
 
+
+/* Estilos base */
+
+/* Media query para pantallas pequeñas (hasta 768px) */
+@media (max-width: 768px) {
+    body {
+        font-size: 16px; /* Ajusta el tamaño de fuente base */
+    }
+
+    #random-images-section {
+        padding: 1.25rem; /* Reduce el espacio en la sección de imágenes */
+        width: 90%; /* Ajusta el ancho de la sección de imágenes */
+        z-index: 0; /* Coloca la sección de imágenes detrás de la sección de favoritos */
+        /* margin: 0 0 50px 0; */
+        /* margin: 50px 20px 50px 20px; */
+        margin: 3vh 0 3vh 0;
+    }
+    .title {
+        font-size: 1.5rem; /* Ajusta el tamaño del título */
+        
+    }
+    .random-images-container {
+        flex-direction: column; /* Cambia la disposición de las imágenes a una columna */
+        align-items: center; /* Centra las imágenes horizontalmente */
+        margin: 1.25rem 0; /* Ajusta los márgenes */
+    }
+    .nasa-image {
+        max-width: 100%; /* Las imágenes ocuparán el ancho completo del contenedor */
+        height: auto; /* Se ajustarán proporcionalmente */
+        margin: 10px 0; /* Agrega espacio entre las imágenes */
+    }
+
+    #favorite-images-section {
+        padding: 1.25rem; /* Reduce el espacio en la sección de favoritos */
+        width: 90%; /* Ajusta el ancho de la sección de favoritos */
+        z-index: 0; /* Coloca la sección de favoritos detrás de la sección de imágenes */
+        margin: 0 0 5vh 0;
+    }
+    #favorite-images-container {
+        align-items: unset;
+    }
+    .favorite-image {
+        max-width: 50%;
+        margin: 0;
+    }
+
+    /* Ajustes para SweetAlert2 */
+    .swal2-container {
+        padding: 0;
+    }
+    .swal2-popup {
+        width: 100vh;
+        height: 100vh;
+        overflow: hidden;
+        padding: 1rem;
+        /* box-shadow: var(--box-shadow-section); */
+    }
+
+    #dark-mode-button {
+        /* colocar encima de los contenedores y las imágenes */
+        position: relative;
+        z-index: 2;
+    }
+}
+
+/* Media query para pantallas medianas (769px a 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    /* Estilos para pantallas medianas si es necesario */
+}
