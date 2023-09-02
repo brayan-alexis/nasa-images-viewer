@@ -138,7 +138,8 @@ body {
 }
 .favorite-image {
     max-width: 10rem; /* 100px */ /* Adjust the size as needed */ 
-    height: auto;
+    /* height: auto; */
+    height: 10rem;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     margin: 10px;
@@ -149,10 +150,10 @@ body.dark-mode {
     background-color: var(--background-color-light);
     color: #121212;
 }
-#random-images-section.dark-mode {
+.random-images-section.dark-mode {
     background-color: var(--background-color-light-section);
 }
-#favorite-images-section.dark-mode {
+.favorite-images-section.dark-mode {
     background-color: var(--background-color-light-section);
 }
 .dark-mode-container {
@@ -178,41 +179,39 @@ body.dark-mode {
 }
 
 
-/* Estilos base */
 
-/* Media query para pantallas pequeñas (hasta 768px) */
+/* Media query to small screens (max-width: 768px) */
 @media (max-width: 768px) {
     body {
-        font-size: 16px; /* Ajusta el tamaño de fuente base */
+        font-size: 16px;
     }
 
-    #random-images-section {
-        padding: 1.25rem; /* Reduce el espacio en la sección de imágenes */
-        width: 90%; /* Ajusta el ancho de la sección de imágenes */
-        z-index: 0; /* Coloca la sección de imágenes detrás de la sección de favoritos */
+    .random-images-section {
+        padding: 1.25rem;
+        width: 90%;
+        z-index: 0;
         /* margin: 0 0 50px 0; */
         /* margin: 50px 20px 50px 20px; */
         margin: 3vh 0 3vh 0;
     }
     .title {
-        font-size: 1.5rem; /* Ajusta el tamaño del título */
+        font-size: 1.5rem;
         
     }
     .random-images-container {
-        flex-direction: column; /* Cambia la disposición de las imágenes a una columna */
-        align-items: center; /* Centra las imágenes horizontalmente */
-        margin: 1.25rem 0; /* Ajusta los márgenes */
+        flex-direction: column;
+        margin: 1.25rem 0;
     }
     .nasa-image {
-        max-width: 100%; /* Las imágenes ocuparán el ancho completo del contenedor */
-        height: auto; /* Se ajustarán proporcionalmente */
-        margin: 10px 0; /* Agrega espacio entre las imágenes */
+        max-width: 100%;
+        height: auto;
+        margin: 10px 0;
     }
 
-    #favorite-images-section {
-        padding: 1.25rem; /* Reduce el espacio en la sección de favoritos */
-        width: 90%; /* Ajusta el ancho de la sección de favoritos */
-        z-index: 0; /* Coloca la sección de favoritos detrás de la sección de imágenes */
+    .favorite-images-section {
+        padding: 1.25rem;
+        width: 90%;
+        z-index: 0;
         margin: 0 0 5vh 0;
     }
     #favorite-images-container {
@@ -223,7 +222,7 @@ body.dark-mode {
         margin: 0;
     }
 
-    /* Ajustes para SweetAlert2 */
+    /* SweetAlert2 */
     .swal2-container {
         padding: 0;
     }
@@ -239,13 +238,12 @@ body.dark-mode {
     }
 
     #dark-mode-button {
-        /* colocar encima de los contenedores y las imágenes */
         position: relative;
         z-index: 2;
     }
 }
 
-/* Media query para pantallas medianas (769px a 1024px) */
+/* Media query to medium screens (between 769px and 1024px) */
 @media (min-width: 769px) and (max-width: 1024px) {
-    /* Estilos para pantallas medianas si es necesario */
+
 }
