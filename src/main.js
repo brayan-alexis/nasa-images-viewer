@@ -9,8 +9,8 @@ const nasaImages = [nasaImage1, nasaImage2, nasaImage3];
 // Dark mode functionality
 const body = document.body;
 const darkModeButton = document.getElementById("dark-mode-button");
-const randomImageContainer = document.getElementById("random-images-section");
-const favoriteImagesSection = document.getElementById("favorite-images-section");
+const randomImageContainer = document.querySelector(".random-images-section");
+const favoriteImagesSection = document.querySelector(".favorite-images-section");
 
 
 // Display favorite images from localStorage on page load
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Function to fetch a random NASA image
 const fetchNasaImages = async () => {
     try {
-        const response = await fetch(`${NASA_API_URL}search?q=hubble&media_type=image`);
+        const response = await fetch(`${NASA_API_URL}search?q=hubble&media_type=image&page_size=500`);
         const data = await response.json();
         console.log(data); // Check the console to see the data object
         return data.collection.items; // Return the array of images
@@ -116,6 +116,7 @@ const addToFavorites = async (imageId) => {
         imageUrl: image.src,
         imageAlt: image.title,
         imageHeight: 300,
+        heightAuto: true,
         confirmButtonText: "Add to favorites",
         showCancelButton: true,
         cancelButtonText: "Cancel",
@@ -189,18 +190,19 @@ const addToFavorites = async (imageId) => {
                 localStorage.setItem('favoriteImages', JSON.stringify(existingFavorites));
             }
 
-            // Swal.fire({
-            //     title: "Added to favorites!",
-            //     icon: "success",
-            //     confirmButtonText: "OK",
-            //     confirmButtonColor: "#3085d6",
-            //     allowOutsideClick: false,
-            //     allowEscapeKey: false,
-            //     allowEnterKey: false,
-            //     stopKeydownPropagation: false,
-            //     showCloseButton: true,
-            //     closeButtonAriaLabel: "Close this dialog window",
-            // });
+            Swal.fire({
+                title: "Added to favorites!",
+                icon: "success",
+                confirmButtonText: "OK",
+                confirmButtonColor: "#3085d6",
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false,
+                stopKeydownPropagation: false,
+                showCloseButton: true,
+                closeButtonAriaLabel: "Close this dialog window",
+                timer: 2000,
+            });
             
         } 
         // else if (result.dismiss === Swal.DismissReason.cancel) {
@@ -223,29 +225,102 @@ const addToFavorites = async (imageId) => {
 
 // Remove from favorites by clicking the image
 const removeFromFavorites = (image) => {
-    // Remove the image from the page
-    const favoriteImagesContainer = document.getElementById("favorite-images-container");
-    favoriteImagesContainer.removeChild(image);
+    // Sweet Alert 2: ask for confirmation to remove from favorites
+    Swal.fire({
+        title: "Are you sure?",
+        text: "This will remove the image from your favorites.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Remove",
+        cancelButtonText: "Cancel",
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        allowOutsideClick: true,
+        allowEscapeKey: true,
+        allowEnterKey: false,
+        stopKeydownPropagation: false,
+        showCloseButton: true,
+        closeButtonAriaLabel: "Close this dialog window",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: "Removed from favorites!",
+                icon: "success",
+                confirmButtonText: "OK",
+                confirmButtonColor: "#3085d6",
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false,
+                stopKeydownPropagation: false,
+                showCloseButton: true,
+                closeButtonAriaLabel: "Close this dialog window",
+                timer: 2000,
+            });
+            // removeImage(image);
+            // Remove the image from the page
+            const favoriteImagesContainer = document.getElementById("favorite-images-container");
+            favoriteImagesContainer.removeChild(image);
 
-    // Remove the image from localStorage
-    const existingFavorites = JSON.parse(localStorage.getItem('favoriteImages')) || [];
-    const updatedFavorites = existingFavorites.filter(fav => fav.id !== image.id);
+            // Remove the image from localStorage
+            const existingFavorites = JSON.parse(localStorage.getItem('favoriteImages')) || [];
+            const updatedFavorites = existingFavorites.filter(fav => fav.id !== image.id);
 
-    localStorage.setItem('favoriteImages', JSON.stringify(updatedFavorites));
+            localStorage.setItem('favoriteImages', JSON.stringify(updatedFavorites));
+        }
+    });
+
+
+    
 };
 
 // Clear all favorite images
 const clearFavoritesButton = document.getElementById("clear-favorites-button");
 clearFavoritesButton.addEventListener("click", () => {
-    const favoriteImagesContainer = document.getElementById("favorite-images-container");
 
-    // Remove all favorite images from the page
-    while (favoriteImagesContainer.firstChild) {
-        favoriteImagesContainer.removeChild(favoriteImagesContainer.firstChild);
-    }
+    //sweet alert 2: ask for confirmation to clear all favorites
+    Swal.fire({
+        title: "Are you sure?",
+        text: "This will remove all your favorite images.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Remove",
+        cancelButtonText: "Cancel",
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        allowOutsideClick: true,
+        allowEscapeKey: true,
+        allowEnterKey: false,
+        stopKeydownPropagation: false,
+        showCloseButton: true,
+        closeButtonAriaLabel: "Close this dialog window",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: "Cleared all favorites!",
+                icon: "success",
+                confirmButtonText: "OK",
+                confirmButtonColor: "#3085d6",
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false,
+                stopKeydownPropagation: false,
+                showCloseButton: true,
+                closeButtonAriaLabel: "Close this dialog window",
+                // timer: 2000,
+            });
+            const favoriteImagesContainer = document.getElementById("favorite-images-container");
 
-    // Remove all favorite images from localStorage
-    localStorage.removeItem('favoriteImages');
+            // Remove all favorite images from the page
+            while (favoriteImagesContainer.firstChild) {
+                favoriteImagesContainer.removeChild(favoriteImagesContainer.firstChild);
+            }
+
+            // Remove all favorite images from localStorage
+            localStorage.removeItem('favoriteImages');
+        }
+    });
+
+    
 });
 
 // Dark mode functionality

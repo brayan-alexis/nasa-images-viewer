@@ -65,7 +65,7 @@ body {
     background-color: var(--background-color-button-active);
 }
 
-#random-images-section {
+.random-images-section {
     max-width: 50rem; /* 800px */
     text-align: center;
     padding: 2.5rem; /* 40px */
@@ -108,7 +108,7 @@ body {
     cursor: pointer;
 }
 
-#favorite-images-section {
+.favorite-images-section {
     /* display: flex;
     flex-direction: column;
     align-items: center;
@@ -229,10 +229,13 @@ body.dark-mode {
     }
     .swal2-popup {
         width: 100vh;
-        height: 100vh;
+        /* height: 100vh; */
         overflow: hidden;
         padding: 1rem;
         /* box-shadow: var(--box-shadow-section); */
+    }
+    .swal2-image {
+        object-fit: scale-down;
     }
 
     #dark-mode-button {
